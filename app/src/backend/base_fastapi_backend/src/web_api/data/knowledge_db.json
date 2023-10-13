@@ -1,0 +1,26 @@
+[
+    {
+    "type": "KNOWLEDGE_NODE",
+    "knowledge_node_id": "0",
+    "knowledge_node_name": "article title here",
+    "knowledge_node_content": "article content here",
+    "knowledge_node_instruction_template": "---",
+    "knowledge_node_response_template": "---"
+    },
+    {
+    "type": "KNOWLEDGE_NODE",
+    "knowledge_node_id": "1",
+    "knowledge_node_name": "article title here",
+    "knowledge_node_content": "article content here",
+    "knowledge_node_instruction_template": "i---",
+    "knowledge_node_response_template": "---"
+    },
+    {   
+    "type": "KNOWLEDGE_NODE",
+    "knowledge_node_id": "2",
+    "knowledge_node_name": "article title here",
+    "knowledge_node_content": "article content here",
+    "knowledge_node_instruction_template": "---",
+    "knowledge_node_response_template": "---"
+    }
+]

@@ -1,0 +1,39 @@
+[
+    {
+        "type": "TOOL",
+        "tool_id": "1",
+        "tool_name": "search_tool",
+        "tool_function_name": "search_tool",
+        "tool_function_inputs": [
+            {
+                "input_name": "search_term",
+                "input_type": "string"
+            }
+        ],
+        "tool_description": "A search tool helps you to search for a specific item on the web",
+        "input_output_examples": [
+            {
+                "input": "search tool: Who is Barack Obama?",
+                "output": "action: search_tool; args: search_query=barack Obama;"
+            }, 
+            {
+                "input": "search tool: Tell me more about Seattle",
+                "output": "action: search_tool; args: search_query=seattle;"
+            }, 
+            {
+                "input": "search tool: What is the capital of France?",
+                "output": "action: search_tool; args: search_query=capital of france;"
+            }, 
+            {
+                "input": "search tool: What is the population of New York City?",
+                "output": "action: search_tool; args: search_query=new york city population;"
+            }, 
+            {
+                "input": "search tool: Who is the president of the United States?",
+                "output": "action: search_tool; args: search_query=president of the United States;"
+            }
+        ],
+        "tool_instruction_template": "search for a specific item",
+        "tool_response_template": "a list of items"
+    }
+]

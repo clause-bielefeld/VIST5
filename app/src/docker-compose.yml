@@ -1,0 +1,14 @@
+version: "3"
+
+# Tool Kompose: for docker-compose to kubernetes cluster deploy conversion => https://github.com/kubernetes/kompose
+
+services:
+  vist5_backend:
+    build:
+      context: ./backend/base_fastapi_backend
+    volumes:
+      - ./backend/base_fastapi_backend/src:/src
+    ports:
+      - 8080:8080
+    command: >
+      sh -c "uvicorn run_fastapi_server:app --reload --host 0.0.0.0 --port 8080"

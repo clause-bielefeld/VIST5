@@ -1,0 +1,570 @@
+[
+    {
+    "type": "FEW_SHOT_EXAMPLE",
+    "intend_id": "0",
+    "intend_name": "greetings",
+    "intend_description": "greetings are used to greet the user, for example at the beginning of a conversation, like this:",
+    "input_output_examples": [ 
+        {
+            "input": "Hey there!",
+            "output": "action: text_response; args: \"text\": \"Hi! How can I assist you today?\";"
+        },
+        {
+            "input": "Greetings!",
+            "output": "action: text_response; args: \"text\": \"Hello! It's great to hear from you. How can I help you today?\";"
+        },
+        {
+            "input": "Hi, how are you doing?",
+            "output": "action: text_response; args: \"text\": \"I'm doing well, thank you. How can I help you?\";"
+        },
+        {
+            "input": "Hello",
+            "output": "action: text_response; args: \"text\": \"Good afternoon! I'm happy to help with any questions you may have.\";" 
+        },
+        {
+            "input": "Good morning",
+            "output": "action: text_response; args: \"text\": \"Thank you! It's great to be here to assist you. How can I help?\";"
+        }
+    ],
+    "intend_instruction_template": "Reply kindly to the user's greeting \n INPUT: {greeting} \n OUTPUT: {greeting}",
+    "intend_response_template": "AI: {greeting}"
+    },
+    {
+    "type": "FEW_SHOT_EXAMPLE",
+    "intend_id": "1",
+    "intend_name": "goodbye",
+    "intend_description": "goodbye are used to say goodbye to the user, for example at the end of a conversation",
+    "input_output_examples": [
+        {
+            "input": "Goodbye",
+            "output": "action: text_response; args: \"text\": \"Goodbye! See you soon!\";"
+        },
+        {
+            "input": "See you later",
+            "output": "action: text_response; args: \"text\": \"See you later!\";"
+        }, 
+        {
+            "input": "Bye",
+            "output": "action: text_response; args: \"text\": \"Bye!\";"
+        },
+        {
+            "input":"Thanks for your help!",
+            "output":"action: text_response; args: \"text\": \"You're welcome, happy to help!\";"
+        }
+    ],
+    "intend_instruction_template": "Reply kindly to the user's goodbye \n INPUT: {goodbye} \n OUTPUT: {goodbye}",
+    "intend_response_template": "AI: {goodbye}"
+    },
+    {
+    "type": "FEW_SHOT_EXAMPLE",
+    "intend_id": "2",
+    "intend_name": "thanks",
+    "intend_description": "thanks are used to thank the user, for example at the end of a conversation",
+    "input_output_examples": [
+        {
+            "input": "thanks a lot, you were really helpful!",
+            "output": "action: text_response; args: \"text\": \"You are welcome, happy to help!\";"
+        },
+        {
+            "input": "thank you so much",
+            "output": "action: text_response; args: \"text}\": \"It was my pleasure! Don't hesitate to reach out if you need further help.\";"
+        },
+        {
+            "input": "thanks", 
+            "output": "action: text_response; args: \"text\": \"You are welcome!\";"
+        },
+        {
+            "input": "thanks, you're a lifesaver!",
+            "output": "action: text_response; args: \"text\": \"You are very welcome!\";"
+        },
+        {
+            "input": "thank you",
+            "output": "action: text_response; args: \"text\": \"You are welcome! If there is anything I can do just ask.\";"
+        }
+    ],
+    "intend_instruction_template": "Reply kindly to the user's thanks \n INPUT: {thanks} \n OUTPUT: {thanks}",
+    "intend_response_template": "AI: {thanks}"
+    },
+    {
+    "type": "FEW_SHOT_EXAMPLE",
+    "intend_id": "3",
+    "intend_name": "apology",   
+    "intend_description": "apology are used to apologize to the user, for example when the bot made a mistake",
+    "input_output_examples":[
+        {
+            "input": "That is not what I meant",
+            "output": "action: text_response; args: \"text\": \"I apologize for any confusion I may have caused. Can you please clarify what you meant?\";"
+        },
+        {
+            "input": "I'm sorry, I didn't understand your response",
+            "output": "action: text_response; args: \"text\": \"No problem, let me try to answer it again. Can you please rephrase the question?\";"
+        },
+        {
+            "input": "I'm sorry, you got me wrong. I meant something else",
+            "output": "action: text_response; args: \"text\": \"No worries, let me know how I can help. I'll do my best to get it right this time.\";"
+        },
+        {
+            "input": "you're wrong",
+            "output": "action: text_response; args: \"text\": \"I'm sorry for any confusion. Please let me know how I can help.; action: none\";"
+        },
+        {
+            "input": "No, this is the wrong answer", 
+            "output": "action: text_response; args: \"text\": \"Absolutely, I'm sorry. Let me know what I can help you with.\";"
+        }
+    ],
+    "intend_instruction_template": "Reply kindly to the user's apology \n INPUT: {apology} \n OUTPUT: {apology}",
+    "intend_response_template": "AI: {apology}"
+    },
+    {
+    "type": "FEW_SHOT_EXAMPLE",
+    "intend_id": "4",
+    "intend_name": "download_visualization",
+    "intend_description": "download visualization are used to download the visualization of the data",
+    "input_output_examples": [
+        {
+            "input": "I want to download the visualization",
+            "output": "action: download_visualization; args: \"text\": \"Sure, here you go\";"
+        },
+        {
+            "input": "Can I download the visualization?",
+            "output": "action: download_visualization; args: \"text\": \"Yes, here you go\";"
+        },
+        {
+            "input": "Give me the visualization as an image",
+            "output": "action: download_visualization; args: \"text\": \"Sure, here you go\";"
+        },
+        {
+            "input": "download visualization",
+            "output": "action: download_visualization; args: \"text\": \"Sure, here you go\";"
+        },
+        {
+            "input": "Can I get the visualization as a file?",
+            "output": "action: download_visualization; args: \"text\": \"Yepp, here you go\";"
+        }
+    ],
+    "intend_instruction_template": "Reply kindly to the user's download visualization \n INPUT: {download_visualization} \n OUTPUT: {download_visualization}",
+    "intend_response_template": "AI: {download_visualization}"
+    },
+    {
+        "type":"FEW_SHOT_EXAMPLE", 
+        "intend_id":"5",
+        "intend_name":"navigate_to_city",
+        "intend_description":"navigate to a city on the leaflet plot",
+        "input_output_examples":[
+            {
+                "input":"navigate to New York",
+                "output":"action: navigate_city; args: \"city\": \"New York\";"
+            },
+            {
+                "input":"navigate to London",
+                "output":"action: navigate_city; args: \"city\": \"London\";"
+            },
+            {
+                "input":"navigate to Seattle",
+                "output":"action: navigate_city; args: \"city\": \"Seattle\";"
+            },
+            {
+                "input":"navigate to Berlin",
+                "output":"action: navigate_city; args: \"city\": \"Berlin\";"
+            },
+            {
+                "input":"navigate to Rome",
+                "output":"action: navigate_city; args: \"city\": \"Rome\";"
+            },
+            {
+                "input":"fly to Berlin",
+                "output":"action: navigate_city; args: \"city\": \"Berlin\";"
+            },
+            {
+                "input":"jump to Amsterdam",
+                "output":"action: navigate_city; args: \"city\": \"Amsterdam\";"
+            },
+            {
+                "input":"go to Hamburg",
+                "output":"action: navigate_city; args: \"city\": \"Hamburg\";"
+            },
+            {
+                "input":"navigate to Bielefeld",
+                "output":"action: navigate_city; args: \"city\": \"Bielefeld\";"
+            },
+            {
+                "input":"navigate to Hong Kong",
+                "output":"action: navigate_city; args: \"city\": \"Hong Kong\";"
+            }
+        ],
+        "intend_instruction_template":"Reply kindly to the user's navigate to city \n INPUT: {navigate_to_city} \n OUTPUT: {navigate_to_city}",
+        "intend_response_template":"AI: {navigate_to_city}"
+    },
+    {
+        "type":"FEW_SHOT_EXAMPLE",
+        "intend_id":"6",
+        "intend_name":"zoom_in",
+        "intend_description":"zoom in on the leaflet plot",
+        "input_output_examples":[
+            {
+                "input":"zoom in",
+                "output":"action: locomotion; \"type\": \"in\";"
+            },
+            {
+                "input":"zoom in on the map",
+                "output":"action: locomotion; args: \"type\": \"in\";"
+            },
+            {
+                "input":"zoom in on the plot",
+                "output":"action: locomotion; args: \"type\": \"in\";"
+            },
+            {
+                "input":"zoom in on the chart",
+                "output":"action: locomotion; args: \"type\": \"in\";"
+            },
+            {
+                "input":"zoom in on the graph", 
+                "output":"action: locomotion; args: \"type\": \"in\";"
+            }
+        ],
+        "intend_instruction_template":"Reply kindly to the user's zoom in \n INPUT: {zoom_in} \n OUTPUT: {zoom_in}",
+        "intend_response_template":"AI: {zoom_in}"
+    },
+    {
+        "type":"FEW_SHOT_EXAMPLE",
+        "intend_id":"7",
+        "intend_name":"zoom_out",
+        "intend_description":"zoom out on the leaflet plot",
+        "input_output_examples":[
+            {
+                "input":"zoom out",
+                "output":"action: locomotion; args: \"type\": \"out\";"
+            },
+            {
+                "input":"zoom out of the map",
+                "output":"action: locomotion; args: \"type\": \"out\";"
+            },
+            {
+                "input":"zoom out of the plot",
+                "output":"action: locomotion; args: \"type\": \"out\";"
+            },
+            {
+                "input":"zoom out of the chart",
+                "output":"action: locomotion; args: \"type\": \"out\";"
+            },
+            {
+                "input":"zoom out of the graph",
+                "output":"action: locomotion; args: \"type\": \"out\";"
+            },
+            {
+                "input":"zoom way out",
+                "output":"action: locomotion; args: \"type\": \"out\";"
+            }
+        ],
+        "intend_instruction_template":"Reply kindly to the user's zoom out \n INPUT: {zoom_out} \n OUTPUT: {zoom_out}",
+        "intend_response_template":"AI: {zoom_out}"
+    },
+    {
+        "type":"FEW_SHOT_EXAMPLE",
+        "intend_id":"8",
+        "intend_name":"move_left",
+        "intend_description":"move left on the leaflet map",
+        "input_output_examples":[
+            {
+                "input":"move left",
+                "output":"action: locomotion; args: \"type\": \"left\";"
+            },
+            {
+                "input":"move to the left",
+                "output":"action: locomotion; args: \"type\":\"left\";"
+            },
+            {
+                "input":"move left on the map",
+                "output":"action: locomotion; args: \"type\": \"left\";"
+            },
+            {
+                "input":"move left on the leaflet map",
+                "output":"action: locomotion; args: \"type\": \"left\";"
+            },
+            {
+                "input":"move to the left side",
+                "output":"action: locomotion; args: \"type\": \"left\";"
+            },
+            {
+                "input":"left",
+                "output":"action: locomotion; args: \"type\": \"left\";"
+            }
+        ],
+        "intend_instruction_template":"Reply kindly to the user's move left \n INPUT: {left} \n OUTPUT: {left}",
+        "intend_response_template":"AI: {left}"
+    },
+    {
+        "type":"FEW_SHOT_EXAMPLE",
+        "intend_id":"9",
+        "intend_name":"move_right",
+        "intend_description":"move right on the leaflet map",
+        "input_output_examples":[
+            {
+                "input":"move right",
+                "output":"action: locomotion; args: \"type\": \"right\";"
+            },
+            {
+                "input":"move to the right",
+                "output":"action: locomotion; args: \"type\": \"right\";"
+            },
+            {
+                "input":"move right on the map",
+                "output":"action: locomotion; args: \"type\": \"right\";"
+            },
+            {
+                "input":"move right on the leaflet map",
+                "output":"action: locomotion; args: \"type\": \"right\";"
+            },
+            {
+                "input":"move to the right side",
+                "output":"action: locomotion; args: \"type\": \"right\";"
+            },
+            {
+                "input":"right",
+                "output":"action: locomotion; args: \"type\": \"right\";"
+            }
+        ],
+        "intend_instruction_template":"Reply kindly to the user's move right \n INPUT: {move_right} \n OUTPUT: {move_right}",
+        "intend_response_template":"AI: {move_right}"
+    },
+    {
+        "type":"FEW_SHOT_EXAMPLE",
+        "intend_id":"10",
+        "intend_name":"move_up",
+        "intend_description":"move up on the leaflet map",
+        "input_output_examples":[
+            {
+                "input":"move up",
+                "output":"action: locomotion; args: \"type\": \"up\";"
+            },
+            {
+                "input":"move to the top",
+                "output":"action: locomotion; args: \"type\": \"up\";"
+            },
+            {
+                "input":"move up on the map",
+                "output":"action: locomotion; args: \"type\": \"up\";"
+            },
+            {
+                "input":"upwards",
+                "output":"action: locomotion; args: \"type\": \"up\";"
+            },
+            {
+                "input":"to the top",
+                "output":"action: locomotion; args: \"type\": \"up\";"
+            },
+            {
+                "input":"up",
+                "output":"action: locomotion; args: \"type\": \"up\";"
+            }
+        ],
+        "intend_instruction_template":"Reply kindly to the user's move up \n INPUT: {move_up} \n OUTPUT: {move_up}",
+        "intend_response_template":"AI: {move_up}"
+    },
+    {
+        "type":"FEW_SHOT_EXAMPLE",
+        "intend_id":"11",
+        "intend_name":"move_down",
+        "intend_description":"move down on the leaflet map",
+        "input_output_examples":[
+            {
+                "input":"move down",
+                "output":"action: locomotion; args: \"type\": \"down\";"
+            },
+            {
+                "input":"move to the bottom",
+                "output":"action: locomotion; args: \"type\": \"down\";"
+            },
+            {
+                "input":"move down on the map",
+                "output":"action: locomotion; args: \"type\": \"down\";"
+            },
+            {
+                "input":"downwards",
+                "output":"action: locomotion; args: \"type\": \"down\";"
+            },
+            {
+                "input":"to the bottom",
+                "output":"action: locomotion; args: \"type\": \"down\";"
+            },
+            {
+                "input":"down",
+                "output":"action: locomotion; args: \"type\": \"move_down\";"
+            }
+        ],
+        "intend_instruction_template":"Reply kindly to the user's move down \n INPUT: {move_down} \n OUTPUT: {move_down}",
+        "intend_response_template":"AI: {move_down}"
+    },
+    {
+        "type" : "FEW_SHOT_EXAMPLE",
+        "intend_id" : "12",
+        "intend_name" : "change_map",
+        "intend_description" : "change the basemap type",
+        "input_output_examples" : [
+            { 
+                "input" : "change the map type to satellite",
+                "output": "action: change_map; args: \"type\": \"satellite\";"
+            },
+            {
+                "input" : "change the map type to terrain",
+                "output": "action: change_map; args: \"type\": \"terrain\";"
+            },
+            {
+                "input" : "change the map type to street",
+                "output": "action: change_map; args: \"type\": \"street\";"
+            },
+            {
+                "input" : "change the map type to dark",
+                "output": "action: change_map; args: \"type\": \"dark\";"
+            },
+            {
+                "input" : "change the map type to hybrid",
+                "output": "action: change_map; args: \"type\": \"hybrid\";"
+            }
+        ],
+        "intend_instruction_template" : "Reply kindly to the user's change map type \n INPUT: {change_map_type} \n OUTPUT: {change_map_type}",
+        "intend_response_template" : "AI: {change_map_type}"
+    },
+    {
+        "type" : "FEW_SHOT_EXAMPLE",
+        "intend_id" : "13",
+        "intend_name" : "marker_plot",
+        "intend_description" : "plot a marker on the leaflet map",
+        "input_output_examples":[
+            {
+                "input": "show me a leaflet marker plot",
+                "output": "action: marker_plot; args: \"text\": \"Sure, here you go\";"
+            },
+            {
+                "input": "create a leaflet marker plot!",
+                "output": "action: marker_plot; args: \"text\": \"Sure, here you go\";"
+            }, 
+            {
+                "input": "give me a leaflet marker plot of all the locations",
+                "output": "action: marker_plot; args: \"text\": \"Sure, here you go\";"
+            }, 
+            {
+                "input": "plot me a leaflet marker plot of all weather stations",
+                "output": "action: marker_plot; args: \"text\": \"Sure, here you go\";"
+            }, 
+            {
+                "input": "create a leaflet marker plot of all cities",
+                "output": "action: marker_plot; args: \"text\": \"Sure, here you go\";"
+            }
+        ]
+    },
+    {
+        "type" : "FEW_SHOT_EXAMPLE",
+        "intend_id" : "14",
+        "intend_name" : "heat_map",
+        "intend_description" : "plot a heat map on the leaflet map",
+        "input_output_examples":[
+            {
+                "input": "show me a leaflet heat map from the column humidity",
+                "output": "action: heat_map; args: \"column\": \"humidity\";"
+            },
+            {
+                "input": "show me a leaflet heat map of temperature",
+                "output": "action: heat_map; args: \"column\": \"temperature\";"
+            },
+            {
+                "input": "create a leaflet heat map on the column precipitation",
+                "output": "action: heat_map; args: \"column\": \"precipitation\";"
+            }, 
+            {
+                "input": "give me a leaflet heat map of the column temperature",
+                "output": "action: heat_map; args: \"column\": \"temperature\";"
+            },
+            {
+                "input": "create a leaflet heat map of the column precipitation",
+                "output": "action: heat_map; args: \"column\": \"precipitation\";"
+            }
+        ]
+    }, 
+    {
+        "type" : "FEW_SHOT_EXAMPLE",
+        "intend_id" : "15", 
+        "intend_name" : "flow_map",
+        "intend_description" : "plot a flow map on the leaflet map",
+        "input_output_examples":[
+            {
+                "input": "show me a leaflet flow map of wind directions",
+                "output": "action: flow_map; args: \"text\": \"Sure, here you go\";"
+            },
+            {
+                "input": "create a leaflet flow map!",
+                "output": "action: flow_map; args: \"text\": \"Sure, here you go\";"
+            }, 
+            {
+                "input": "give me a leaflet flow map of wind",
+                "output": "action: flow_map; args: \"text\": \"Sure, here you go\";"
+            }, 
+            {
+                "input": "plot me a leaflet flow map for wind vectors",
+                "output": "action: flow_map; args: \"text\": \"Sure, here you go\";"
+            }, 
+            {
+                "input": "create a leaflet flow map",
+                "output": "action: flow_map; args: \"text\": \"Sure, here you go\";"
+            }
+        ] 
+    }, 
+    {
+        "type": "FEW_SHOT_EXAMPLE",
+        "intend_id": "16",
+        "intend_name": "reset_map",
+        "intend_description": "reset the map to the default view",
+        "input_output_examples": [
+            {
+                "input": "reset leaflet map",
+                "output": "action: reset_map; args: \"text\": \"Sure, here you go\";"
+            },
+            {
+                "input": "reset leaflet",
+                "output": "action: reset_map; args: \"text\": \"Sure, here you go\";"
+            },
+            {
+                "input": "reset the leaflet map view",
+                "output": "action: reset_map; args: \"text\": \"Sure, here you go\";"
+            },
+            {
+                "input": "reset the leaflet map to the default view",
+                "output": "action: reset_map; args: \"text\": \"Sure, here you go\";"
+            },
+            {
+                "input": "reset the leaflet map to default",
+                "output": "action: reset_map; args: \"text\": \"Sure, here you go\";"
+            } 
+        ]
+    },
+    {
+        "type":"FEW_SHOT_EXAMPLE",
+        "intend_id":"17",
+        "intend_name":"get_weather_data",
+        "intend_description":"get weather data from the open meteo weather api",
+        "input_output_examples":[
+            {
+                "input":"get weather data for Berlin",
+                "output":"action: get_weather_data; args: \"city\": \"Berlin\";"
+            },
+            {
+                "input":"get weather data for London",
+                "output":"action: get_weather_data; args: \"city\": \"London\";"
+            },
+            {
+                "input":"get weather data for Paris",
+                "output":"action: get_weather_data; args: \"city\": \"Paris\";"
+            },
+            {
+                "input":"get weather data for New York",
+                "output":"action: get_weather_data; args: \"city\": \"New York\";"
+            },
+            {
+                "input":"get weather data for Tokyo",
+                "output":"action: get_weather_data; args: \"city\": \"Tokyo\";"
+            }
+        ]
+    }
+]
+
+

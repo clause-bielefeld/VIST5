@@ -1,0 +1,14 @@
+# requirements without version specified
+fastapi
+uvicorn[standard]
+jinja2
+aiohttp
+aiofiles
+inject
+# ML requirements
+transformers
+sentencepiece 
+optimum[onnxruntime]==1.4.1
+sentence-transformers
+#transformers[torch] -> only needed when pytorch model needed -> we use onnx models instead -> only use tokenizer from transformers
+

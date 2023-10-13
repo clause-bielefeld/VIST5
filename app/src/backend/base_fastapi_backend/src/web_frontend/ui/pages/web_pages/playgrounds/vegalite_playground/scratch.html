@@ -1,0 +1,85 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+        <title>Simplest In-Browser Speech Recognition</title>
+        <link rel="stylesheet" href="index.css">
+        <script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vosk-browser@0.0.5/dist/vosk.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <button id="trigger" type="button">Start recognition</button>
+            <div id="recognition-result"><span id="partial"></span></div>
+        </div>
+        <script>
+    
+    async function init() {
+    const resultsContainer = document.getElementById('recognition-result');
+    const partialContainer = document.getElementById('partial');
+
+    const host_url = "http://localhost:8080" // https://nlpvisualizationevaluation.uni-jena.de "http://localhost:8080"
+    const model_path = host_url + "/static/ui/pages/web_pages/playgrounds/vegalite_playground/assets/vosk-model-small-en-us-0.15.tar.gz"
+
+    partialContainer.textContent = "Loading...";
+    
+    const channel = new MessageChannel();
+    const model = await Vosk.createModel(model_path);
+    model.registerPort(channel.port1);
+
+    const sampleRate = 48000;
+    
+    const recognizer = new model.KaldiRecognizer(sampleRate);
+    recognizer.setWords(true);
+
+    recognizer.on("result", (message) => {
+        const result = message.result;
+        console.log(JSON.stringify(result, null, 2));
+        
+        const newSpan = document.createElement('span');
+        newSpan.textContent = `${result.text} `;
+        resultsContainer.insertBefore(newSpan, partialContainer);
+    });
+    recognizer.on("partialresult", (message) => {
+        const partial = message.result.partial;
+        console.log(JSON.stringify(partial, null, 2));
+
+        partialContainer.textContent = partial;
+    });
+    
+    partialContainer.textContent = "Ready";
+    
+    const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: false,
+        audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            channelCount: 1,
+            sampleRate
+        },
+    });
+    
+    const audioContext = new AudioContext();
+    await audioContext.audioWorklet.addModule(`${host_url}/static/ui/pages/web_pages/playgrounds/vegalite_playground/assets/recognizer-processor.js`)
+    const recognizerProcessor = new AudioWorkletNode(audioContext, 'recognizer-processor', { channelCount: 1, numberOfInputs: 1, numberOfOutputs: 1 });
+    recognizerProcessor.port.postMessage({action: 'init', recognizerId: recognizer.id}, [ channel.port2 ])
+    recognizerProcessor.connect(audioContext.destination);
+    
+    const source = audioContext.createMediaStreamSource(mediaStream);
+    source.connect(recognizerProcessor);
+}
+
+window.onload = () => {
+    const trigger = document.getElementById('trigger');
+    trigger.onmouseup = () => {
+        trigger.disabled = true;
+        init();
+    };
+}
+
+
+        </script>
+    </body>
+</html>

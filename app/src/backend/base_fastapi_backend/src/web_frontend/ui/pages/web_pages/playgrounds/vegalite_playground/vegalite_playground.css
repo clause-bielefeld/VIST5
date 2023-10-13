@@ -1,0 +1,167 @@
+/* GENERAL */
+
+section{
+    height: 100%;
+  }
+
+.columns{
+    display: flex;
+}
+
+/* VISUALIZATION */
+
+#vis{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+
+/* SIDEBAR */
+
+/* POP UP MODAL */
+
+.modal-card {
+  max-width: 600px; /* adjust the max width as needed */
+}
+
+.modal-card-foot {
+  justify-content: flex-end;
+}
+
+#map_card{
+  padding: 0rem;
+}
+
+/* CHAT STYLES */
+
+  .chat-container {
+    height: 75vh;
+    overflow-y: scroll;
+  }
+  .message {
+    max-width: 80%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .message.sent {
+    align-self: flex-end;
+    margin-left: auto;
+    background-color: #c1e1c5; /* light green */
+    color: #4c4c4c;
+  }
+  
+  .message.received {
+    align-self: flex-start;
+    margin-right: auto;
+    background-color: #f0e6f6; /* light pink */ 
+    color: #4c4c4c;
+  }
+  
+  .message p {
+    margin: 0;
+  }
+  .message .time {
+    font-size: 12px;
+    color: #9e9e9e;
+  }
+  .input-container {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
+  .input-container .input {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+
+  .chat-container::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f5f5f5;
+  }
+  
+  .chat-container::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #c1c1c1;
+  }
+  
+  .chat-container::-webkit-scrollbar-thumb:hover {
+    background-color: #9e9e9e;
+  }
+
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  
+  .typing-animation {
+    border-right: 2px solid #4c4c4c;
+    animation: typing 1.0s steps(40, end) infinite;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  /* END OF CHAT STYLES */
+
+/* TABLE CONTAINER */
+
+.table-container::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #c1c1c1;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #9e9e9e;
+}
+
+/* CODE BLOCKS in CHAT MESSAGE */
+/* Style the scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f5f5f5;
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #c1c1c1;
+}
+
+/* Style the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #9e9e9e;
+}
+
+/* Style the code block container */
+.message-body pre {
+  overflow-x: auto;
+  padding: 1px;
+  margin: 0;
+  border-radius: 5px;
+  background-color: #f5f5f5; 
+}
+
+.message-body pre code {
+  outline: none;
+  display: block; 
+}
+
+/* Speech Recognition Button Overlay */
+.speech_recognition_button_overlay {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+}
+
+.speech_recognition_button_overlay_active {
+  color: red;
+}

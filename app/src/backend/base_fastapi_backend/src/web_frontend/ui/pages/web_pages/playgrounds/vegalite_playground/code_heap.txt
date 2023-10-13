@@ -1,0 +1,612 @@
+      // Code for the chat tab
+      var chatInput = document.getElementById('chat-input');
+      var chatHistory = document.getElementById('chat-history');
+      var sendButton = document.getElementById('send-button');
+      var messages = [];
+
+      sendButton.addEventListener('click', function() {
+          var message = chatInput.value;
+          messages.push(message);
+          chatInput.value = '';
+          renderChat();
+      });
+
+      function renderChat() {
+          var messageElements = messages.map(function(message) {
+              return '<div class="message">' + message + '</div>';
+          });
+          chatHistory.innerHTML = messageElements.join('');
+      }
+
+--------------------------
+OLD VERSION
+.chat-container {
+    height: 50vh;
+    overflow-y: scroll;
+  }
+  .message {
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .message.sent {
+    background-color: #c1e1c5; /* light green */
+    align-self: flex-end;
+    color: #4c4c4c;
+  }
+  .message.received {
+    background-color: #f0e6f6; /* light pink */
+    align-self: flex-start;
+    color: #4c4c4c;
+  }
+
+
+----
+        // ANIMATE: wait for the animation to finish
+/*         setTimeout(() => {
+          // Replace the placeholder with the actual message
+          placeholder.classList.remove("typing-animation");
+          placeholder.innerHTML = `<p>${text}</p>`;
+          // Add the current time
+          const time = new Date().toLocaleString();
+          placeholder.innerHTML += `<p class="time">${time}</p>`;
+        }, 1000); */
+-----------------
+
+# DOWNLOADING SENTENCE EMBEDDINGS  MODELS FROM HUGGING FACE in run_fastapi_server.py
+
+""" from sentence_transformers import SentenceTransformer, util
+import torch
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+# save model to disk
+model.save('all-MiniLM-L6-v2')  """
+
+
+# DOWNLOAD in COLAB 
+
+from transformers import T5Tokenizer, T5ForConditionalGeneration
+
+#
+model = T5ForConditionalGeneration.from_pretrained('google/flan-t5-base')
+tokenizer = T5Tokenizer.from_pretrained('google/flan-t5-base') 
+# Save the model and tokenizer to disk
+model.save_pretrained("flan_t5_base")
+tokenizer.save_pretrained("flan_t5_base_tokenizer") 
+
+!zip -r /content/flan_t5_base.zip /content/flan_t5_base
+
+from google.colab import files
+files.download("/content/flant_t5_base.zip")
+
+# solution found here: https://stackoverflow.com/questions/50453428/how-do-i-download-multiple-files-or-an-entire-folder-from-google-colab
+
+
+############################
+
+TOOL_PROMPT_TEMPLATE = """
+=========
+CONTEXT: 
+{context}
+
+=========
+STATE: 
+{state_prompt}
+=========
+
+TASK: 
+Given the examples in the CONTEXT above, 
+
+{tool_example}
+
+Now provide the input for the tool such that gives you the desired output.
+TOOL_INPUT: 
+"""
+
+
+####################### old version of inner monolog -> got replaced by single prompt only solution
+        elif self.dialog_mode == "knowledge_augmented_dialog":
+            # create inner monologue prompt: do we need more context to generate the response?
+            chat_history = self.memory.short_term_memory.get_chat_history()
+            user_input = input_string
+            inner_monolog_prompt_template = self.memory.working_memory.inner_monolog_prompt_template
+            inner_monologue_prompt = inner_monolog_prompt_template.format(chat_history=chat_history, user_input=user_input) 
+            response = self.model.generate(inner_monologue_prompt)
+            print("response: ", response)
+            response = "yes"
+            # if yes, then get context 
+            if response == "yes":
+                # assemble context 
+                # RETRIEVAL: first get a list of document ids and their embeddings from the knowledge base of documents that could help, documents can either be: KNOWLEDGE_NODES, FEW-SHOT-EXAMPLES, or TOOLS
+                document_ids, document_embeddings = self.memory.retrieve_documents_from_knowledge_base(query=input_string) 
+                # TODO: RERANKING: then rerank the documents based on their embeddings and the current state of the agent (= query + context)
+                # document_ids = self.rerank_documents(document_ids=document_ids, document_embeddings=document_embeddings, query=input_string)
+                # take the top document and use it to generate the context
+                top_document_id = document_ids[0]
+                # get document from knowledge base
+                document = self.memory.get_document_from_knowledge_base(document_id=top_document_id)
+                #print("document: ", document)
+                # get document_type from knowledge base
+                document_type = self.memory.get_document_type_from_knowledge_base(document_id=top_document_id)
+                # check if the document is a KNOWLEDGE_NODE, FEW_SHOT_EXAMPLE, or TOOL
+                #print("document_type: ", document_type)
+                document_type = "TOOL"
+                if document_type == "KNOWLEDGE_NODE":
+
+
+
+
+#####################
+from vega_zero_to_vega_lite import VegaZero2VegaLite
+
+vega_lite_to_vega_zero_converter = VegaZero2VegaLite()
+VEGA_LITE_POSSIBLE_VALUES_PER_SLOT_DICT = {} 
+
+
+def collect_possible_values_per_slot_dict(dataframe):
+    # iterate over the whole dataset and collect all possible slots and values 
+    for index, row in dataframe.iterrows():
+        # get vega zero string from row 
+        current_output = row['output']
+        # the vega zero string is everything that appears after the substring 'action_input:' in the current output
+        vega_zero_string = current_output.split('action_input:')[1]
+        # convert vega zero to vega lite 
+        vega_lite_dict = vega_lite_to_vega_zero_converter.to_VegaLite(vega_zero_string)
+        # get all slots and values from vega lite dict
+        for key, value in vega_lite_dict.items():
+            # check if key is already in the dict
+            if key not in VEGA_LITE_POSSIBLE_VALUES_PER_SLOT_DICT:
+                # if not, add it to the dict
+                VEGA_LITE_POSSIBLE_VALUES_PER_SLOT_DICT[key] = [value]
+            else:
+                # if yes, check if value is already in the list of values for this slot
+                if value not in VEGA_LITE_POSSIBLE_VALUES_PER_SLOT_DICT[key]:
+                    # if not, add it to the list of values for this slot
+                    VEGA_LITE_POSSIBLE_VALUES_PER_SLOT_DICT[key].append(value)
+    
+###################
+# serialize yaml into path notation: encoding.x.field=job,encoding.x.type=nominal,encoding.y.aggregate=min,encoding.y.field=age,encoding.y.sort=x,encoding.y.type=quantitative,mark=bar
+def serialize_yaml(yaml_str):
+    yaml_obj = yaml.load(yaml_str, Loader=yaml.SafeLoader)
+    return _serialize_yaml_helper(yaml_obj)
+
+def _serialize_yaml_helper(yaml_obj, path=""):
+    if isinstance(yaml_obj, dict):
+        pairs = []
+        for key, val in yaml_obj.items():
+            if path:
+                new_path = f"{path}.{key}"
+            else:
+                new_path = key
+            pairs.append(_serialize_yaml_helper(val, new_path))
+        return ",".join(pairs)
+    elif isinstance(yaml_obj, list):
+        return ",".join([_serialize_yaml_helper(item, path) for item in yaml_obj])
+    else:
+        return f"{path}={yaml_obj}"
+
+serialized_yaml = serialize_yaml(yaml_data)
+print(serialized_yaml)
+
+# deserialize yaml
+def deserialize_yaml(serialized_str):
+    result = {}
+    for pair in serialized_str.split(','):
+        keys, value = pair.split('=')
+        keys = keys.split('.')
+        d = result
+        for key in keys[:-1]:
+            d = d.setdefault(key, {})
+        d[keys[-1]] = value
+    return yaml.safe_load(json.dumps(result))
+
+deserialized_yaml = deserialize_yaml(serialized_yaml)
+print(deserialized_yaml)
+
+#####################
+        # TODO: where to we keep possible values for the visualization state? -> actually they are fixed by the library used (e.g. vega or plot)
+        # -> keep the possible values per category in a variable saved somewhere!
+        # format visualization state to string 
+                #for key, value in self.graph_memory['visualization_state'].items():
+        #    possible_values = str(VEGA_LITE_POSSIBLE_VALUES_PER_SLOT_DICT[key])
+        #    # if key, value pair is not the last one, add comma 
+        #    if key != list(self.graph_memory['visualization_state'].keys())[-1]:
+        #        visualization_state += key + " " + value + " " + possible_values + ", "
+        #    else:
+        #        visualization_state += key + " " + value + " " + possible_values
+        #return visualization_state
+
+########################
+    def check_model_output(self, output_string: str):
+        # Define a regular expression to match the function call
+        pattern = r'([a-zA-Z_][a-zA-Z0-9_]*)\((.*)\)'
+        # Extract the function name and argument list from the string
+        match = re.match(pattern, function_call_str)
+        func_name = match.group(1)
+        args_str = match.group(2)
+        # Parse the argument list using the ast.literal_eval function
+        args_list = list(ast.literal_eval(args_str))
+        # Print the results
+        print("Function name:", func_name)
+        print("Arguments:", args_list)
+        # check if function exists in func list
+        if self.memory.long_term_memory.check_if_function_exists(func_name):
+            # get the function from the ToolManager
+            if hasattr(self.memory.long_term_memory.tool_manager, func_name):
+                feature_function = getattr(self.memory.long_term_memory.tool_manager, function_name)
+                # try to run the function with the inputs
+                try:
+                    func_name, args_list = feature_function(*args_list)
+                except:
+                    func_name = ""
+                    args_list = []
+            else:
+                func_name = ""
+                args_list = []
+        else:
+            func_name = ""
+            args_list = []
+        return func_name, 
+        
+##################### QUERY ANSWER FINE TUNING -> now we do query query finetunings
+        # query-answer fine tuning on tools + few shot examples
+        from sentence_transformers import SentenceTransformer, InputExample, losses
+        from torch.utils.data import DataLoader
+        # get the model to be trained
+        model = self.similarity_model
+        # create a list of InputExample objects
+        #Define your train examples. You need more than just two examples...
+        train_examples = []
+        query_answer_dataset_dict = {} # python dict {"class": [{"query":'', "answer":''}, ...], } 
+        # iterate over the document_db and create query-answer pairs
+        print('... creating query-answer pairs for training')
+        for document in self.document_db:
+            # get class
+            current_type = document['type']
+            # take out knowledge nodes for now
+            if(current_type == 'KNOWLEDGE_NODE'):
+                continue
+            elif(current_type == 'FEW_SHOT_EXAMPLE'):
+                # query-answer pairs = in the input_output_examples field
+                current_input_output_examples = document['input_output_examples']
+                for input_output_example in current_input_output_examples:
+                    # get query
+                    current_query = input_output_example['input']
+                    # get answer
+                    current_answer = input_output_example['output']
+                    query_answer_object = {'query': current_query, 'answer': current_answer}
+                    # get intend_name -> this is used as class
+                    current_intend_name = document['intend_name']
+                    # append to query_answer_dataset
+                    if current_intend_name in query_answer_dataset_dict:
+                        query_answer_dataset_dict[current_intend_name].append(query_answer_object)
+                    else:
+                        query_answer_dataset_dict[current_intend_name] = [query_answer_object]
+            elif(current_type == 'TOOL'):
+                # query-answer pairs = in the tool_input_output_examples field
+                current_tool_input_output_examples = document['input_output_examples']
+                for tool_input_output_example in current_tool_input_output_examples:
+                    # get query
+                    current_query = tool_input_output_example['input']
+                    # get answer
+                    current_answer = tool_input_output_example['output']
+                    query_answer_object = {'query': current_query, 'answer': current_answer}
+                    # get tool_name -> this is used as class
+                    current_tool_name = document['tool_name']
+                    # append to query_answer_dataset_dict 
+                    if current_tool_name in query_answer_dataset_dict:
+                        query_answer_dataset_dict[current_tool_name].append(query_answer_object)
+                    else:
+                        query_answer_dataset_dict[current_tool_name] = [query_answer_object]
+            else:
+                print('ERROR: unknown class')
+            # put together positive and negative pairs -> positive pairs are the query-answer pairs, negative pairs are random pairs form other classes in the list 
+            # iterate over the query_answer_dataset_dict and create InputExample objects
+            for class_name in query_answer_dataset_dict:
+                # get the list of query-answer pairs for the current class
+                current_query_answer_list = query_answer_dataset_dict[class_name]
+                # positive pairs: iterate over the list and create InputExample objects
+                for query_answer_object in current_query_answer_list:
+                    # get query
+                    current_query = query_answer_object['query']
+                    # get answer
+                    current_answer = query_answer_object['answer']
+                    # create InputExample object
+                    current_input_example = InputExample(texts=[current_query, current_answer], label=0.9)
+                    # append to train_examples
+                    train_examples.append(current_input_example)
+                    # negative pairs: get all the other classes in the list and create one random negative InputExample objects
+                    for other_class_name in query_answer_dataset_dict:
+                        if other_class_name != class_name:
+                            # get the list of query-answer pairs for the other class
+                            other_query_answer_list = query_answer_dataset_dict[other_class_name]
+                            # get a random query-answer pair from the other class
+                            other_query_answer_object = random.choice(other_query_answer_list)
+                            # query = current_query -> because we want the similarity to be low
+                            # get answer
+                            other_answer = other_query_answer_object['answer']
+                            # create InputExample object
+                            other_input_example = InputExample(texts=[current_query, other_answer], label=0.1)
+                            # append to train_examples
+                            train_examples.append(other_input_example)#
+        print('... finetuning the similarity model.')
+        # create a DataLoader for the train examples    
+        train_dataloader = DataLoader(train_examples, shuffle=True, batch_size=16)
+        # define the loss function
+        train_loss = losses.CosineSimilarityLoss(model=model) 
+        # train the model
+        model.fit(train_objectives=[(train_dataloader, train_loss)], epochs=3, warmup_steps=20) # 5 epochs? warmup_steps=20
+        # EVALUATION: evaluate the model on training data, for test reasons only to know how well the model is doing after n epochs
+        # create an evaluator object using the EmbeddingSimilarityEvaluator class 
+        sentences1 = [example.texts[0] for example in train_examples] 
+        sentences2 = [example.texts[1] for example in train_examples]  
+        scores = [example.label for example in train_examples]
+        evaluator = evaluation.EmbeddingSimilarityEvaluator(sentences1=sentences1,sentences2=sentences2,scores=scores)
+        # evaluate the model on the training data
+        train_score = evaluator(model)
+        print(f"Evaluation Score on train set: {train_score:.4f}")
+        # save the model
+        model.save('./web_api/models/all-mpnet-base-v2-finetuned') 
+        print('... similarity model fine-tuned.')
+        return model 
+
+############# old knowledge node handling
+            if document_type == "KNOWLEDGE_NODE":
+                # assemble context from knowledge node = set the context to the document which is restricted to max_length, if the document is shorter than max_length, then the context is the document
+                document = document['knowledge_node_content']
+                if len(document) > self.max_doc_length:
+                    context = document[:self.max_doc_length] 
+                else: 
+                    context = document
+                # assemble prompt
+                personality_prompt_template = self.memory.working_memory.personality_prompt_template
+                context_prompt_template = self.memory.working_memory.context_prompt_template
+                # generate the state prompt from the current state of the agent in the short term memory
+                current_state = self.memory.get_current_state() 
+                state_prompt_template = current_state 
+                context_prompt = context_prompt_template.format(chat_history=chat_history, user_input=user_input, context=context, personality_prompt=personality_prompt_template, state_prompt=state_prompt_template) 
+                #print("context_prompt: ", context_prompt)
+                # generate response
+                output_string = self.model.generate(context_prompt)
+                action_name, args_list = self.check_model_output(output_string)
+
+############################ old agent loop
+
+        elif self.dialog_mode == "knowledge_augmented_dialog":
+            # get chat history from short term memory
+            chat_history = self.memory.short_term_memory.get_chat_history()
+            user_input = input_string
+            # assemble context 
+            # RETRIEVAL: first get a list of document ids and their embeddings from the knowledge base of documents that could help, documents can either be: KNOWLEDGE_NODES, FEW-SHOT-EXAMPLES, or TOOLS
+            top_k_examples = self.memory.retrieve_examples_from_knowledge_base(query=input_string) # returns a list of objects with the following structure: [{"input": "example_input", "output": "example_output"}, ...]
+            
+            
+            # TODO: RERANKING: then rerank the documents based on their embeddings and the current state of the agent (= query + context)
+            # document_ids = self.rerank_documents(document_ids=document_ids, document_embeddings=document_embeddings, query=input_string)
+            # take the top document and use it to generate the context
+            top_document_id = document_ids[0]
+            # get document from knowledge base
+            document = self.memory.get_document_from_knowledge_base(document_id=top_document_id)
+            #print("document: ", document)
+            # get document_type from knowledge base
+            document_type = self.memory.get_document_type_from_knowledge_base(document_id=top_document_id)
+            # check if the document is a KNOWLEDGE_NODE, FEW_SHOT_EXAMPLE, or TOOL
+            #print("document_type: ", document_type)
+            if document_type == "FEW_SHOT_EXAMPLE":
+                # assemble context from few shot example
+                #intend_description = "Intend description: " + document['intend_description'] # Here are a few examples from earlier conversations you can use to answer the user's question:
+                intend_input_output_examples = document['intend_input_output_examples']
+                context = ""
+                # add intend_description at the beginning of the context
+                #context += intend_description + "\n" + "Examples: " + "\n" 
+                context += "The following are some examples from previous conversations:\n"
+                for index, example in enumerate(intend_input_output_examples):
+                    # if example is not the last example, then add a new line
+                    if index != len(intend_input_output_examples) - 1:
+                        context += "USER: " + example['input'] + "\n" + "VIST5: " + example['output'] + "\n" #"\n--\n"
+                    else:
+                        context += "USER: " + example['input'] + "\n" + "VIST5: " + example['output']
+                # shorten context if it is too long
+                if len(context) > self.max_doc_length:
+                    context = context[:self.max_doc_length]
+                # assemble prompt
+                personality_prompt_template = self.memory.working_memory.personality_prompt_template
+                context_prompt_template = self.memory.working_memory.context_prompt_template
+                # generate the state prompt from the current state of the agent in the short term memory
+                current_state = self.memory.get_current_state()
+                state_prompt_template = current_state 
+                context_prompt = context_prompt_template.format(chat_history=chat_history, user_input=user_input, context=context, personality_prompt=personality_prompt_template, state_prompt=state_prompt_template)
+                #print("context_prompt: ", context_prompt)
+                # generate response 
+                output_string = self.model.generate(context_prompt)
+                action_name, args_list = self.check_model_output(output_string)
+            elif document_type == "TOOL":
+                # assemble context from tool 
+                tool_description = document['tool_description']
+                tool_input_output_examples = document['tool_input_output_examples']
+                context = ""
+                # add tool_description at the beginning of the context
+                context += tool_description + "\n" + "Examples: " + "\n"
+                for index, example in enumerate(tool_input_output_examples):
+                    # if example is not the last example, then add a new line
+                    if index != len(tool_input_output_examples) - 1:
+                        context += "USER: " + example['input'] + "\n" + "VIST5: " + example['output'] + "\n" #+ "\n--\n"
+                    else:
+                        context += "USER: " + example['input'] + "\n" + "VIST5: " + example['output']
+                # shorten context if it is too long
+                if len(context) > self.max_doc_length:
+                    context = context[:self.max_doc_length]
+                # assemble prompt
+                personality_prompt_template = self.memory.working_memory.personality_prompt_template
+                context_prompt_template = self.memory.working_memory.context_prompt_template
+                # generate the state prompt from the current state of the agent in the short term memory
+                current_state = self.memory.get_current_state()
+                state_prompt_template = current_state 
+                context_prompt = context_prompt_template.format(chat_history=chat_history, user_input=user_input, context=context, personality_prompt=personality_prompt_template, state_prompt=state_prompt_template)
+                #print("context_prompt: ", context_prompt) 
+                # generate response
+                output_string = self.model.generate(context_prompt)
+                action_name, args_list = self.check_model_output(output_string)
+                # check if the model wants to run a tool 
+                if action_name == "run_tool":
+                    # run tool and get output
+                    tool_output = self.run_tool(args_list)
+                    # check if tool output starts with 'ERROR'
+                    if tool_output.startswith("ERROR"):
+                        action_name = "text_response"
+                        args_list = ["I am sorry, I did not understand your query. Maybe you can rephrase it?"]
+                    else:
+                        # if no, then the tool output is the new context and we need to generate a new response
+                        new_context = tool_output
+                        # assemble prompt
+                        context_prompt = context_prompt_template.format(chat_history=chat_history, user_input=user_input, context=new_context, personality_prompt=personality_prompt_template, state_prompt=state_prompt_template)
+                        # generate response
+                        output_string = self.model.generate(context_prompt)
+                        action_name, args_list = self.check_model_output(output_string)
+                elif action_name == "text_response":
+                    # if the model wants to return a text response, then we just return the text response
+                    pass
+                else:
+                    # if the model wants to do something else, then we return an error message
+                    action_name = "text_response"
+                    args_list = ["I am sorry, I did not understand your query. Maybe you can rephrase it?"]
+            else:
+                # ERROR handling
+                print("ERROR: Invalid document type provided from knowledge base.")
+                # return error message
+                text_output = "I am sorry, I did not understand your query. Maybe you can rephrase it?"
+                action = "text_response"
+                args_list = [text_output]
+            print("context_prompt: ", context_prompt)
+            print("output_string: ", output_string)
+            # STATE UPDATE: 
+            # add input and response to short term memory
+            self.memory.short_term_memory.add_to_chat_history(user_input=user_input, response=output_string) #response=text_output)
+            # ASSEMBLE RESPONSE: 
+            response = {"action": action_name, "args": args_list} 
+            return response
+
+##################################
+# possible values for the visualization state:
+VEGA_LITE_POSSIBLE_VALUES_PER_SLOT_DICT = {
+            'mark': ['bar', 'point', 'arc', 'line'],
+            'data': [],
+            'encoding': {
+                'x': [],
+                'y': {
+                    'aggregate': ['count', 'min', 'mean', 'sum', 'max'],
+                    'y': ''
+                },
+                'color': {
+                    'z': ''
+                }
+            },
+            'transform': {
+                'filter': [],
+                'group': [],
+                'bin': {
+                    'axis': [],
+                    'type': []
+                },
+                'sort': {
+                    'axis': [],
+                    'type': []
+                },
+                'topk': []
+            }
+        }
+
+################################
+        # SANITY CHECK: check if function_call_string refers to a function in the tool_db and if yes, then run the function
+        function_match = re.match(r"(\w+)\((.*)\)", function_call_string)
+        function_name = function_match.group(1)
+        function_inputs = function_match.group(2).split(', ')
+        print("function_name: ", function_name)
+        print("function_inputs: ", function_inputs)
+
+
+###################################
+# Maybe: If the CONTEXT contains examples, you can use them as a template to formulate your answer.
+# TODO: maybe we can add a task prompt
+# {task_prompt} -> "Please do the following .../Instruction ...""
+# TODO: maybe we can add an answer prompt
+# {answer_prompt} -> "You can orient your answer formulation by this template: First ... Then ... Finally ...""
+# --------------------------------------------
+
+# OLD QUAC dataset preparation method: 
+
+# quac dataset
+def create_dataframe_from_dataset(dataset_dict):
+    # init rows
+    data_rows = []
+    for sample in dataset_dict:
+        current_task = task_name # question/task name
+        # assemble the context -> context stays the same for all data points
+        background = sample['background']
+        paragraph_context = sample['paragraphs'][0]['context']
+        # IMPORTANT: ERROR CORRECTION => remove CANNOTANSWER from context ... this seems to be an error in the dataset
+        paragraph_context = paragraph_context.replace('CANNOTANSWER', '')
+        current_context = background + ' ' + paragraph_context
+        table_state = "Table State:\n" #+ f"table_name: {table_name}, "+ header_string # name: people, col: a | b | c|
+        visualization_state = "Visualization State:\n"
+        state_prompt = table_state + "\n" + visualization_state
+        chat_history = ""
+        question_answer_sequence = sample['paragraphs'][0]['qas']
+        for qa_pair in question_answer_sequence:
+            question = qa_pair['question']
+            answer = qa_pair['orig_answer']['text']
+            if (str(answer) == 'CANNOTANSWER'):
+                answer = "I'm sorry, I can't answer this question."
+            current_input = question
+            current_output = answer
+            output_action = "action: text_response"
+            output_args = f"args: text={current_output}" 
+            current_output = output_action + '; ' + output_args + ";"
+            data_rows.append({"task":current_task, "input":current_input, "context":current_context, "output":current_output, "chat_history":chat_history, "state_prompt":state_prompt})
+            # update the chat_history
+            # check if the chat_history string ends with a newline \n, if not add one but only if it is not the empty string
+            if chat_history != "" and chat_history[-1] != "\n":
+                chat_history += "\n"
+            chat_history += 'INPUT: ' + current_input + "\n" + 'OUTPUT: ' + current_output ## + "\n" -> line break is done in template
+            # update the state_prompt -> not needed in this case, because dialog doesnt change the state here
+    # create new dataframe 
+    dataframe = pd.DataFrame(data_rows)
+    return dataframe 
+
+dataset_file_path = "./datasets/pretraining/quac_dataset/"
+dataset_name = "quac"
+task_name = "quac"
+
+# quac is there as a json
+import json 
+
+quac_json_file_path = "./datasets/pretraining/quac_dataset/quac.json"
+
+with open(quac_json_file_path, 'r') as f:
+    data = json.load(f)
+#print(data['data'][0])
+
+dataset_dict = data['data']
+
+dataset_dataframe = create_dataframe_from_dataset(dataset_dict)
+#print(dataset_dataframe.head())     
+
+# save pandas dataframe to csv
+dataset_dataframe.to_csv(f"{dataset_file_path}{dataset_name}.csv", index=False)
+
+--------------------------------------------------------------------------------------
+        // Image download
+
+  // Define a function to create a map image
+  function export_leaflet_map() {
+    const dom_element = document.getElementById('map_card')[0]; // chart-wrapper
+        domtoimage.toJpeg(dom_element, { quality: 0.99 })
+        .then(function (dataUrl) {
+            var link = document.createElement('a');
+            link.download = 'export_plot.jpg';
+            link.href = dataUrl;
+            link.click();
+        });
+  }
+  // call the function 2 seconds after the page is loaded
+  setTimeout(export_leaflet_map, 2000);
