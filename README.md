@@ -6,8 +6,8 @@ VIST5: An Adaptive, Retrieval-Augmented Language Model for Visualization-oriente
 ## Setup
 
 - clone repository from https://github.com/clause-bielefeld/VIST5
-- download model from here: https://zenodo.org/uploads/10279066
-- unzip the model folder and put the whole resulting folder into this directory: /app/src/backend/base_fastapi_backend/src/web_api/
+- download models and tokenizer from here: https://zenodo.org/uploads/10279066
+- unzip each model (vist5, mpnet) and the tokenizer and put all unzipped folders into this directory: /app/src/backend/base_fastapi_backend/src/web_api/models/
 - open a terminal
 - cd into VIST5/app/src
 - run docker-compose up
