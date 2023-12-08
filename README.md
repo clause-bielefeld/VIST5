@@ -28,8 +28,6 @@ booktitle ={Proceedings of the 2023 Conference on Empirical Methods in Natural L
 publisher = {Association for Computational Linguistics},
 year = {2023},
 pages ={in print},
-ImageWebsite = {images/Voigt2023_EMNLP.png},
-VideoWebsite={https://youtu.be/rmqkxOTIcGo},
 }
 
 ```
